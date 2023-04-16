@@ -7,8 +7,9 @@ import HandTrackingModule as htm
 #######################
 brushThickness = 20
 eraserThickness = 75
-width = 1280
+width = 1280 
 height = 720
+
 ########################
 
 
@@ -21,7 +22,7 @@ for imPath in myList:
 header = overlayList[0]
 drawColor = (255, 0, 0)
 
-cap = cv2.VideoCapture(2)
+cap = cv2.VideoCapture(0)
 cap.set(3, width)
 cap.set(4, height)
 
@@ -57,16 +58,16 @@ while True:
             # # Checking for the click
             if y1 < 125:
                 if 250 <x1 <450:
-                    header = overlayList[1]
+                    header = overlayList[3]
                     drawColor = (0, 0, 255)
                 elif 550 <x1 <750:
-                    header = overlayList[3]
+                    header = overlayList[2]
                     drawColor = (0, 255, 0)
                 elif 800 <x1 <950:
-                    header = overlayList[2]
+                    header = overlayList[0]
                     drawColor = (255, 0, 0)
                 elif 1050 <x1 <1200:
-                    header = overlayList[0]
+                    header = overlayList[1]
                     drawColor = (0, 0, 0)
             cv2.rectangle(img, (x1, y1 - 25), (x2, y2 + 25), drawColor, cv2.FILLED)
 
@@ -96,16 +97,16 @@ while True:
         #    imgCanvas = np.zeros((720, 1280, 3), np.uint8)
 
     imgGray = cv2.cvtColor(imgCanvas, cv2.COLOR_BGR2GRAY)
-    _, imgInv = cv2.threshold(imgGray, 20, 255, cv2.THRESH_BINARY_INV)
-    imgInv = cv2.cvtColor(imgInv,cv2.COLOR_GRAY2BGR)
+    # _, imgInv = cv2.threshold(imgGray, 20, 255, cv2.THRESH_BINARY_INV)
+    # imgInv = cv2.cvtColor(imgInv,cv2.COLOR_GRAY2BGR)
     print("img shape", np.shape(img))
-    print("imgInv shape", np.shape(imgInv))
-    img = cv2.bitwise_and(img,imgInv)
+    # print("imgInv shape", np.shape(imgInv))
+    # img = cv2.bitwise_and(img,imgGray)
     img = cv2.bitwise_or(img,imgCanvas)
 
     # Setting the header image
     img[0:125, 0:width] = header
-    imS = cv2.resize(img, (1280,600))
+    imS = cv2.resize(img, (width,height))
     print("imgS shape", np.shape(imS))
     # img = cv2.addWeighted(img,0.5,imgCanvas,0.5,0)
     cv2.imshow("Image", imS)
